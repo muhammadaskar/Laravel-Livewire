@@ -17,10 +17,17 @@ class ContactCreate extends Component
 
     public function store()
     {
-        $contact = Contact::create([
+
+        $this->validate([
+            'name' => 'required|min:5',
+            'phone' => 'required|min:12'
+        ]);
+
+        $data = [
             'name' => $this->name,
             'phone' => $this->phone
-        ]);
+        ];
+        $contact = Contact::create($data);
 
         $this->resetInput();
         $this->emit('contactStored', $contact);
@@ -30,5 +37,13 @@ class ContactCreate extends Component
     {
         $this->name = null;
         $this->phone = null;
+    }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'Nama wajib diisi',
+            'phone.required' => 'Phone wajib diisi'
+        ];
     }
 }

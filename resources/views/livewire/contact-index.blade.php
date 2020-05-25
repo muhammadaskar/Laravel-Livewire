@@ -6,10 +6,20 @@
     </div>
     @endif
 
+
+    @if($statusUpdate)
+    <livewire:contact-update>
+    </livewire:contact-update>
+    @else
     <livewire:contact-create>
     </livewire:contact-create>
+    @endif
 
     <hr>
+
+    <div class="form-group col-md-5" style="float:right;">
+        <input wire:model="cari" class="form-control" placeholder="cari...">
+    </div>
 
     <table class="table">
         <thead class="table-dark">
@@ -35,11 +45,12 @@
                 <td>{{ $c->name }}</td>
                 <td>{{ $c->phone }}</td>
                 <td>
-                    <button class="btn btn-success text-white">edit</button>
-                    <button class="btn btn-danger text-white">hapus</button>
+                    <button wire:click="getContact({{ $c->id }})" class="btn btn-success text-white">edit</button>
+                    <button wire:click="deleteContact({{ $c->id }})" class="btn btn-danger text-white">hapus</button>
                 </td>
             </tr>
             @endforeach
         </tbody>
     </table>
+    {{ $contacts->links() }}
 </div>
